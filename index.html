@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Ensures proper mobile scaling on phones like iPhone SE (375px) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lynk — Connected Client Experiences</title>
+    <!-- Favicon / theme placeholder -->
+    <meta name="description" content="Manage clients, tasks, and documents with dynamic workspace customization.">
+    <!-- Stylesheet links: split into modular CSS files -->
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/views.css">
+</head>
+
+<body>
+    <!-- Skip to main content link for keyboard & screen-reader navigation -->
+    <a href="#main-content" class="skip-link visually-hidden-focusable">Skip to main content</a>
+
+    <!-- APP SHELL: 2-column layout (Sidebar + Content) -->
+    <div class="app" id="app">
+
+        <!-- ========================================== -->
+        <!-- 1. SIDEBAR NAVIGATION                      -->
+        <!-- ========================================== -->
+        <aside class="sidebar glass" aria-label="Main Navigation">
+            <div class="sidebar-brand">
+                <span class="logo-mark" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                </span>
+                <h1 class="logo-text">Lynk</h1>
+            </div>
+
+            <!-- Pill-style navigation links -->
+            <nav class="nav-menu" aria-label="Workspace views">
+                <button type="button" class="nav-item active" data-view="dashboard" aria-current="page">
+                    <span class="nav-icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                    </span>
+                    <span>Dashboard</span>
+                </button>
+                <button type="button" class="nav-item" data-view="clients">
+                    <span class="nav-icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </span>
+                    <span>Clients</span>
+                </button>
+                <button type="button" class="nav-item" data-view="tasks">
+                    <span class="nav-icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    </span>
+                    <span>Tasks</span>
+                </button>
+                <button type="button" class="nav-item" data-view="documents">
+                    <span class="nav-icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </span>
+                    <span>Documents</span>
+                </button>
+                <button type="button" class="nav-item" data-view="settings">
+                    <span class="nav-icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </span>
+                    <span>Settings</span>
+                </button>
+            </nav>
+
+            <!-- Workspace indicator badge at the bottom of the sidebar -->
+            <div class="sidebar-footer">
+                <span class="workspace-pill" id="current-workspace-badge">Freelancer</span>
+            </div>
+        </aside>
+
+        <!-- ========================================== -->
+        <!-- 2. MAIN CONTENT AREA                       -->
+        <!-- ========================================== -->
+        <div class="content-wrapper">
+
+            <!-- TOP BAR: Search + Primary Action -->
+            <header class="topbar glass">
+                <div class="search-box">
+                    <label for="global-search" class="visually-hidden">Search clients and tasks</label>
+                    <span class="search-icon" aria-hidden="true">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    </span>
+                    <input type="search" id="global-search" placeholder="Search clients, tasks..." autocomplete="off">
+                </div>
+
+                <div class="topbar-actions" style="display: flex; align-items: center; gap: 14px;">
+                    <!-- Tactile Sliding Sun -> Moon Toggle Pill -->
+                    <button type="button" class="theme-switch-pill" id="theme-toggle-btn" aria-label="Toggle dark/light mode" title="Toggle daylight/obsidian theme">
+                        <span class="switch-icon" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                        </span>
+                        <span class="switch-icon" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                        </span>
+                        <span class="theme-switch-thumb" aria-hidden="true"></span>
+                    </button>
+
+                    <button type="button" class="btn btn-primary" id="open-new-client-btn">
+                        <span aria-hidden="true">+</span> New client
+                    </button>
+                </div>
+            </header>
+
+            <!-- MAIN VIEW CONTAINER -->
+            <main id="main-content" tabindex="-1">
+
+                <!-- --------------------------------------- -->
+                <!-- VIEW 1: DASHBOARD                      -->
+                <!-- --------------------------------------- -->
+                <section class="view active-view" id="view-dashboard" aria-labelledby="heading-dashboard">
+                    <div class="view-header">
+                        <div>
+                            <h2 id="heading-dashboard" class="view-title">Overview</h2>
+                            <p class="view-subtitle">High-level pulse of your client deliverables</p>
+                        </div>
+                    </div>
+
+                    <!-- Stat Cards Grid -->
+                    <div class="stats-grid">
+                        <article class="stat-card glass">
+                            <h3 class="stat-label">Active Clients</h3>
+                            <p class="stat-number" id="stat-active-clients">0</p>
+                            <span class="stat-meta" id="stat-total-clients">0 total</span>
+                        </article>
+
+                        <article class="stat-card glass">
+                            <h3 class="stat-label">Open Tasks</h3>
+                            <p class="stat-number" id="stat-open-tasks">0</p>
+                            <span class="stat-meta">Pending completion</span>
+                        </article>
+
+                        <article class="stat-card glass">
+                            <h3 class="stat-label">Completed</h3>
+                            <p class="stat-number text-teal" id="stat-completed-tasks">0</p>
+                            <span class="stat-meta">Delivered</span>
+                        </article>
+
+                        <article class="stat-card glass">
+                            <h3 class="stat-label">Overdue</h3>
+                            <p class="stat-number text-peach" id="stat-overdue-tasks">0</p>
+                            <span class="stat-meta">Need attention</span>
+                        </article>
+                    </div>
+
+                    <!-- Charts & Upcoming Deadlines Layout -->
+                    <div class="dashboard-widgets-grid">
+                        <!-- Left Widget: Completion Donut & Status Bars -->
+                        <div class="panel widget-card">
+                            <div class="widget-header">
+                                <h3>Deliverable Progress</h3>
+                                <span class="badge" id="completion-rate-badge">0% Done</span>
+                            </div>
+
+                            <div class="charts-container">
+                                <!-- Donut Chart Widget -->
+                                <div class="donut-wrapper">
+                                    <div id="donut-chart-container" class="donut-chart-svg" aria-label="Task completion donut chart" role="img">
+                                        <!-- SVG will be injected live here -->
+                                    </div>
+                                    <div class="donut-center-text">
+                                        <span class="donut-percent" id="donut-center-percent">0%</span>
+                                        <span class="donut-sublabel">complete</span>
+                                    </div>
+                                </div>
+
+                                <!-- Tasks by Status Progress Bars -->
+                                <div class="status-bars" id="status-bars-container">
+                                    <div class="bar-group">
+                                        <div class="bar-label-row">
+                                            <span>To Do</span>
+                                            <span id="bar-todo-count">0</span>
+                                        </div>
+                                        <div class="progress-track">
+                                            <div class="progress-fill bar-todo" id="bar-todo-fill" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bar-group">
+                                        <div class="bar-label-row">
+                                            <span>In Progress</span>
+                                            <span id="bar-inprogress-count">0</span>
+                                        </div>
+                                        <div class="progress-track">
+                                            <div class="progress-fill bar-inprogress" id="bar-inprogress-fill" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bar-group">
+                                        <div class="bar-label-row">
+                                            <span>Done</span>
+                                            <span id="bar-done-count">0</span>
+                                        </div>
+                                        <div class="progress-track">
+                                            <div class="progress-fill bar-done" id="bar-done-fill" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Widget: Nearest Deadlines -->
+                        <div class="panel widget-card">
+                            <div class="widget-header">
+                                <h3>Coming Up</h3>
+                                <span class="text-muted">Nearest deadlines</span>
+                            </div>
+                            <ul class="deadlines-list" id="upcoming-deadlines-list">
+                                <!-- Rendered dynamically -->
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- --------------------------------------- -->
+                <!-- VIEW 2: CLIENTS                        -->
+                <!-- --------------------------------------- -->
+                <section class="view" id="view-clients" aria-labelledby="heading-clients" hidden>
+                    <div class="view-header">
+                        <div>
+                            <h2 id="heading-clients" class="view-title">Clients</h2>
+                            <p class="view-subtitle">Manage accounts, contact details, and deliverables</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="clients-view-add-btn">+ Add Client</button>
+                    </div>
+
+                    <!-- Search & Filter bar -->
+                    <div class="filter-bar glass">
+                        <input type="search" id="clients-table-search" placeholder="Filter clients by name or detail..." class="filter-input">
+                        <div class="filter-pills" role="radiogroup" aria-label="Filter clients by status">
+                            <button type="button" class="pill-filter active" data-status="all">All</button>
+                            <button type="button" class="pill-filter" data-status="active">Active</button>
+                            <button type="button" class="pill-filter" data-status="pending">Pending</button>
+                            <button type="button" class="pill-filter" data-status="overdue">Overdue</button>
+                            <button type="button" class="pill-filter" data-status="completed">Completed</button>
+                        </div>
+                    </div>
+
+                    <!-- Clients Table Container -->
+                    <div class="panel table-wrap">
+                        <table class="data-table" id="clients-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Client</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Deadline</th>
+                                    <th scope="col">Workspace Details</th>
+                                    <th scope="col" class="text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clients-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                        <!-- Empty State -->
+                        <div class="empty-state" id="clients-empty-state" hidden>
+                            <span class="empty-icon" aria-hidden="true">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+                            </span>
+                            <h3>No clients found</h3>
+                            <p>Get started by adding your first client or adjust your search.</p>
+                            <button type="button" class="btn btn-secondary" id="empty-add-client-btn">+ Create client</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- --------------------------------------- -->
+                <!-- VIEW 3: TASKS                          -->
+                <!-- --------------------------------------- -->
+                <section class="view" id="view-tasks" aria-labelledby="heading-tasks" hidden>
+                    <div class="view-header">
+                        <div>
+                            <h2 id="heading-tasks" class="view-title">Tasks</h2>
+                            <p class="view-subtitle">Track deliverables owed to your clients</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="open-new-task-btn">+ New Task</button>
+                    </div>
+
+                    <div class="panel">
+                        <ul class="tasks-list" id="tasks-list-container">
+                            <!-- Populated dynamically -->
+                        </ul>
+                        <!-- Tasks Empty State -->
+                        <div class="empty-state" id="tasks-empty-state" hidden>
+                            <span class="empty-icon" aria-hidden="true">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                            </span>
+                            <h3>All caught up!</h3>
+                            <p>No active tasks remaining. Add a task to track deliverables.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- --------------------------------------- -->
+                <!-- VIEW 4: DOCUMENTS                      -->
+                <!-- --------------------------------------- -->
+                <section class="view" id="view-documents" aria-labelledby="heading-documents" hidden>
+                    <div class="view-header">
+                        <div>
+                            <h2 id="heading-documents" class="view-title">Documents & Links</h2>
+                            <p class="view-subtitle">Brand kits, repos, contracts and briefs</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="open-new-doc-btn">+ Add Document</button>
+                    </div>
+
+                    <div class="panel">
+                        <div class="documents-grid" id="documents-grid-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                        <!-- Documents Empty State -->
+                        <div class="empty-state" id="documents-empty-state" hidden>
+                            <span class="empty-icon" aria-hidden="true">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                            </span>
+                            <h3>No documents attached yet</h3>
+                            <p>Save external links, agreements, and design links for your clients.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- --------------------------------------- -->
+                <!-- VIEW 5: SETTINGS & FORM BUILDER         -->
+                <!-- --------------------------------------- -->
+                <section class="view" id="view-settings" aria-labelledby="heading-settings" hidden>
+                    <div class="view-header">
+                        <div>
+                            <h2 id="heading-settings" class="view-title">Settings</h2>
+                            <p class="view-subtitle">Workspace type and client field customization</p>
+                        </div>
+                    </div>
+
+                    <!-- Setting 1: Workspace Type Selector -->
+                    <div class="panel settings-section">
+                        <div class="section-lead">
+                            <h3>Workspace Persona</h3>
+                            <p>Select your working profile to load recommended client fields.</p>
+                        </div>
+                        <div class="workspace-picker-grid" id="workspace-picker-container">
+                            <!-- Radio pills for: enterprise, freelancer, designer, developer, custom -->
+                            <label class="workspace-choice-card">
+                                <input type="radio" name="workspace-preset" value="freelancer">
+                                <div class="choice-content">
+                                    <span class="choice-title">Freelancer</span>
+                                    <span class="choice-desc">Projects, rates, invoice milestones</span>
+                                </div>
+                            </label>
+
+                            <label class="workspace-choice-card">
+                                <input type="radio" name="workspace-preset" value="designer">
+                                <div class="choice-content">
+                                    <span class="choice-title">Designer</span>
+                                    <span class="choice-desc">Figma links, revision rounds, brand assets</span>
+                                </div>
+                            </label>
+
+                            <label class="workspace-choice-card">
+                                <input type="radio" name="workspace-preset" value="developer">
+                                <div class="choice-content">
+                                    <span class="choice-title">Developer</span>
+                                    <span class="choice-desc">GitHub repos, tech stacks, staging URLs</span>
+                                </div>
+                            </label>
+
+                            <label class="workspace-choice-card">
+                                <input type="radio" name="workspace-preset" value="enterprise">
+                                <div class="choice-content">
+                                    <span class="choice-title">Enterprise</span>
+                                    <span class="choice-desc">Department, contract value, renewal dates</span>
+                                </div>
+                            </label>
+
+                            <label class="workspace-choice-card">
+                                <input type="radio" name="workspace-preset" value="custom">
+                                <div class="choice-content">
+                                    <span class="choice-title">Custom</span>
+                                    <span class="choice-desc">Build your exact schema from scratch</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Setting 2: DYNAMIC FORM BUILDER -->
+                    <div class="panel settings-section">
+                        <div class="section-lead flex-between">
+                            <div>
+                                <h3>Client Form Builder</h3>
+                                <p>Customize the custom fields shown on the "New Client" form. Existing client data will be preserved.</p>
+                            </div>
+                            <button type="button" class="btn btn-secondary" id="add-field-schema-btn">+ Add Field</button>
+                        </div>
+
+                        <!-- Schema Field Rows list -->
+                        <div class="schema-fields-list" id="schema-fields-container">
+                            <!-- Dynamic field rows rendered here -->
+                        </div>
+                    </div>
+
+                    <!-- Setting 3: Data Management & Backup -->
+                    <div class="panel settings-section">
+                        <div class="section-lead">
+                            <h3>Data Portability & Backup</h3>
+                            <p>Export your records for spreadsheets or create a full JSON backup to restore on another browser.</p>
+                        </div>
+                        <div class="actions-row" style="margin-bottom: 16px;">
+                            <button type="button" class="btn btn-secondary" id="export-csv-btn">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+                                Export Clients to CSV
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="export-json-btn">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                                Export Full Backup (JSON)
+                            </button>
+                            <label class="btn btn-ghost" style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                                Restore from JSON
+                                <input type="file" id="import-json-input" accept=".json" style="display: none;">
+                            </label>
+                        </div>
+                        <div class="section-lead" style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--item-border);">
+                            <h4 style="font-size: 0.95rem; color: var(--color-muted); margin-bottom: 6px;">Reset Workspace</h4>
+                        </div>
+                        <div class="actions-row">
+                            <button type="button" class="btn btn-ghost" id="reset-demo-data-btn">Reset to Sample Data</button>
+                            <button type="button" class="btn btn-danger" id="clear-all-data-btn">Clear All Data</button>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL 1: DYNAMIC "NEW / EDIT CLIENT" MODAL -->
+    <!-- ========================================== -->
+    <dialog class="modal-dialog" id="client-modal" aria-labelledby="client-modal-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="client-modal-title">New Client</h3>
+                <button type="button" class="modal-close-btn" id="client-modal-close" aria-label="Close modal">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+
+            <form id="dynamic-client-form" class="form-grid" novalidate>
+                <!-- Hidden input for edit mode -->
+                <input type="hidden" id="client-id-field" name="clientId">
+
+                <!-- Core Fields (Always present per PRD) -->
+                <div class="field-group">
+                    <label for="core-client-name">Client Name <span class="required" aria-hidden="true">*</span></label>
+                    <input type="text" id="core-client-name" name="name" required placeholder="e.g. Acme Studio">
+                    <span class="field-error" id="error-client-name" aria-live="polite"></span>
+                </div>
+
+                <div class="field-group">
+                    <label for="core-client-status">Status</label>
+                    <select id="core-client-status" name="status">
+                        <option value="active">Active</option>
+                        <option value="pending">Pending</option>
+                        <option value="overdue">Overdue</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="core-client-deadline">Target Deadline</label>
+                    <input type="date" id="core-client-deadline" name="deadline">
+                </div>
+
+                <!-- DYNAMIC SCHEMA FIELDS CONTAINER: Inserted here by JS -->
+                <div class="dynamic-fields-divider">
+                    <span class="divider-label">Workspace Custom Fields</span>
+                </div>
+                <div id="dynamic-form-fields-container" class="form-grid full-width">
+                    <!-- Injected based on active workspace schema -->
+                </div>
+
+                <!-- Form Action Buttons -->
+                <div class="modal-actions full-width">
+                    <button type="button" class="btn btn-ghost" id="client-form-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="client-form-submit">Save Client</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- ========================================== -->
+    <!-- MODAL 2: "NEW TASK" MODAL                  -->
+    <!-- ========================================== -->
+    <dialog class="modal-dialog" id="task-modal" aria-labelledby="task-modal-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="task-modal-title">New Deliverable Task</h3>
+                <button type="button" class="modal-close-btn" id="task-modal-close" aria-label="Close modal">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+
+            <form id="task-form" class="form-grid" novalidate>
+                <div class="field-group full-width">
+                    <label for="task-title">Task Title <span class="required" aria-hidden="true">*</span></label>
+                    <input type="text" id="task-title" name="title" required placeholder="e.g. Deliver hero animation">
+                    <span class="field-error" id="error-task-title" aria-live="polite"></span>
+                </div>
+
+                <div class="field-group">
+                    <label for="task-client-select">Link to Client</label>
+                    <select id="task-client-select" name="clientId">
+                        <option value="">(No client / General)</option>
+                        <!-- Populated with client options -->
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="task-due-date">Due Date</label>
+                    <input type="date" id="task-due-date" name="due">
+                </div>
+
+                <div class="field-group">
+                    <label for="task-status-select">Status</label>
+                    <select id="task-status-select" name="status">
+                        <option value="todo">To Do</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="done">Done</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions full-width">
+                    <button type="button" class="btn btn-ghost" id="task-form-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- ========================================== -->
+    <!-- MODAL 3: "NEW DOCUMENT" MODAL              -->
+    <!-- ========================================== -->
+    <dialog class="modal-dialog" id="doc-modal" aria-labelledby="doc-modal-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="doc-modal-title">Add Document or Link</h3>
+                <button type="button" class="modal-close-btn" id="doc-modal-close" aria-label="Close modal">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </div>
+
+            <form id="doc-form" class="form-grid" novalidate>
+                <div class="field-group full-width">
+                    <label for="doc-name">Document / Resource Name <span class="required" aria-hidden="true">*</span></label>
+                    <input type="text" id="doc-name" name="name" required placeholder="e.g. Brand Design Guidelines">
+                    <span class="field-error" id="error-doc-name" aria-live="polite"></span>
+                </div>
+
+                <div class="field-group">
+                    <label for="doc-client-select">Associated Client</label>
+                    <select id="doc-client-select" name="clientId">
+                        <option value="">(None)</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="doc-url">Resource URL (optional)</label>
+                    <input type="url" id="doc-url" name="url" placeholder="https://figma.com/... or https://github.com/...">
+                </div>
+
+                <div class="modal-actions full-width">
+                    <button type="button" class="btn btn-ghost" id="doc-form-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Document</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- ========================================== -->
+    <!-- DRAWER: CLIENT 360° DETAIL INSPECTOR      -->
+    <!-- ========================================== -->
+    <aside class="client-drawer glass" id="client-drawer" aria-labelledby="drawer-client-name" aria-hidden="true">
+        <div class="drawer-header">
+            <div>
+                <span class="badge" id="drawer-client-status">Active</span>
+                <h2 id="drawer-client-name" class="drawer-title">Client Name</h2>
+                <p class="drawer-deadline" id="drawer-client-deadline">Deadline: Oct 24, 2026</p>
+            </div>
+            <button type="button" class="modal-close-btn" id="client-drawer-close" aria-label="Close client drawer">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        </div>
+
+        <div class="drawer-body">
+            <!-- Section 1: Dynamic Custom Fields -->
+            <div class="drawer-section">
+                <h3 class="drawer-section-title">Workspace Details</h3>
+                <div class="drawer-custom-fields" id="drawer-custom-fields">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Section 2: Linked Tasks -->
+            <div class="drawer-section">
+                <div class="flex-between">
+                    <h3 class="drawer-section-title">Client Deliverables</h3>
+                    <button type="button" class="btn btn-sm btn-ghost" id="drawer-add-task-btn">+ New Task</button>
+                </div>
+                <ul class="tasks-list" id="drawer-tasks-list">
+                    <!-- Tasks linked to this client -->
+                </ul>
+            </div>
+
+            <!-- Section 3: Linked Documents -->
+            <div class="drawer-section">
+                <div class="flex-between">
+                    <h3 class="drawer-section-title">Documents & Links</h3>
+                    <button type="button" class="btn btn-sm btn-ghost" id="drawer-add-doc-btn">+ Add Doc</button>
+                </div>
+                <div class="drawer-docs-list" id="drawer-docs-list">
+                    <!-- Documents linked to this client -->
+                </div>
+            </div>
+        </div>
+
+        <div class="drawer-footer">
+            <button type="button" class="btn btn-secondary" id="drawer-edit-client-btn">Edit Client</button>
+            <button type="button" class="btn btn-danger" id="drawer-delete-client-btn">Delete Client</button>
+        </div>
+    </aside>
+
+    <!-- Drawer Backdrop Overlay -->
+    <div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
+
+    <!-- Main JS Application Entry Point -->
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

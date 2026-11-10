@@ -1,0 +1,128 @@
+/* ==========================================================================
+   css/base.css
+   Modern CSS Reset, Typography, Accessibility Utilities & Clean Background
+   ========================================================================== */
+
+/* 1. Box Sizing Reset: padding & borders stay INSIDE element widths */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* 2. Global Document & Subtle Ambient Gradients */
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--color-ink);
+    line-height: 1.5;
+    min-height: 100vh;
+    background-color: var(--bg-page);
+    /* Clean, soft ambient light glow */
+    background-image:
+        radial-gradient(circle at 10% 12%, rgba(200, 190, 255, 0.45) 0%, transparent 40%),
+        radial-gradient(circle at 90% 18%, rgba(180, 240, 230, 0.45) 0%, transparent 42%),
+        radial-gradient(circle at 60% 88%, rgba(255, 215, 200, 0.35) 0%, transparent 45%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Dark Mode Background: Quiet, premium deep violet-charcoal glow */
+[data-theme="dark"] body {
+    background-color: var(--bg-page);
+    background-image:
+        radial-gradient(circle at 15% 15%, rgba(110, 95, 230, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(45, 212, 191, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 60% 85%, rgba(251, 146, 60, 0.08) 0%, transparent 50%);
+    background-attachment: fixed;
+}
+
+/* 3. Typography Defaults */
+h1, h2, h3, h4 {
+    color: var(--color-ink);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+}
+
+p, span, label {
+    color: inherit;
+}
+
+a {
+    color: var(--color-violet);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--color-violet-hover);
+}
+
+button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+/* 4. Accessibility Utilities */
+
+/* Screen reader only utility */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Skip link */
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 99999;
+    padding: 10px 18px;
+    background: var(--color-violet);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-dropdown);
+}
+
+/* Visible focus outline */
+:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+}

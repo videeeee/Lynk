@@ -1,0 +1,316 @@
+/* ============ 1. TOKENS: colors and sizes defined once, reused everywhere ============ */
+:root {
+    --ink: #1f1d2e;
+    --muted: #6b6880;
+    --violet: #7c6cf0;
+    --teal: #5fd3c4;
+    --peach: #ffc9b5;
+    --glass: rgba(255, 255, 255, 0.45);   /* see-through white */
+    --solid: rgba(255, 255, 255, 0.82);   /* nearly solid, for tables/forms */
+    --border: rgba(255, 255, 255, 0.75);
+    --radius: 24px;
+    --pill: 999px;
+    --shadow: 0 8px 30px rgba(80, 60, 140, 0.12);
+}
+
+/* ============ 2. RESET: remove browser defaults so we start clean ============ */
+* {
+    box-sizing: border-box;   /* padding/border count INSIDE the width */
+    margin: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink);
+    line-height: 1.5;
+    min-height: 100vh;
+    /* Soft pastel blobs behind the glass. Glass needs something colorful to blur. */
+    background:
+        radial-gradient(circle at 15% 10%, #c9bdff 0, transparent 40%),
+        radial-gradient(circle at 85% 20%, #9fe8dc 0, transparent 40%),
+        radial-gradient(circle at 70% 90%, var(--peach) 0, transparent 40%),
+        #f1ecf7;
+    background-attachment: fixed;
+}
+
+/* ============ 3. THE GLASS EFFECT (reusable class) ============ */
+.glass {
+    background: var(--glass);
+    backdrop-filter: blur(18px) saturate(140%);        /* blurs what is BEHIND the element */
+    -webkit-backdrop-filter: blur(18px) saturate(140%); /* Safari */
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* More opaque version for content that must stay readable */
+.panel {
+    background: var(--solid);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+}
+
+/* ============ 4. PAGE LAYOUT (CSS Grid): sidebar | content ============ */
+.app {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+    padding: 24px;
+    min-height: 100vh;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;   /* stack topbar and main vertically */
+    gap: 24px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+h2 {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+}
+
+/* ============ 5. SIDEBAR ============ */
+.sidebar {
+    position: sticky;                  /* stays in view while the page scrolls */
+    top: 24px;
+    align-self: start;
+    height: calc(100vh - 48px);
+    padding: 28px 20px;
+}
+
+.logo {
+    font-size: 1.75rem;
+    margin-bottom: 32px;
+    padding-left: 12px;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+nav a {
+    color: var(--muted);
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: var(--pill);
+    transition: background 0.2s, color 0.2s;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--ink);
+}
+
+nav a.active {
+    background: var(--solid);
+    color: var(--ink);
+    font-weight: 600;
+    box-shadow: var(--shadow);
+}
+
+/* ============ 6. TOP BAR ============ */
+.topbar {
+    display: flex;                     /* Flexbox: items in a row */
+    justify-content: space-between;    /* search left, button right */
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+}
+
+.topbar input {
+    flex: 1;                           /* take all the free space */
+    max-width: 420px;
+}
+
+/* ============ 7. STAT CARDS (Flexbox row) ============ */
+.cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;                   /* wrap to next line if too narrow */
+}
+
+.card {
+    flex: 1 1 180px;                   /* grow, shrink, min width 180px */
+    padding: 22px 24px;
+}
+
+.card h3 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--muted);
+}
+
+.stat {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* ============ 8. TABLE ============ */
+.table-wrap {
+    overflow-x: auto;                  /* scroll sideways on small screens */
+    padding: 12px 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+th, td {
+    padding: 14px 12px;
+    border-bottom: 1px solid rgba(124, 108, 240, 0.12);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background: rgba(124, 108, 240, 0.06);
+}
+
+/* Status badges */
+.badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: var(--pill);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge-active  { background: #d6f5ee; color: #15705f; }
+.badge-pending { background: #fff0cf; color: #8a5a00; }
+.badge-overdue { background: #ffdede; color: #a12828; }
+
+/* ============ 9. FORM (CSS Grid, two columns) ============ */
+.form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 20px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.full {
+    grid-column: 1 / -1;               /* span all columns */
+}
+
+label {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+input, select, textarea {
+    font: inherit;                     /* use the page font, not the browser default */
+    color: var(--ink);
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid rgba(124, 108, 240, 0.2);
+    border-radius: 16px;
+}
+
+input[type="search"] {
+    border-radius: var(--pill);
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Visible keyboard focus (accessibility) */
+input:focus, select:focus, textarea:focus {
+    outline: 3px solid rgba(124, 108, 240, 0.35);
+    border-color: var(--violet);
+}
+
+/* ============ 10. BUTTON ============ */
+.btn {
+    display: inline-block;
+    font: inherit;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 26px;
+    border: none;
+    border-radius: var(--pill);
+    background: linear-gradient(135deg, var(--violet), #5b8def);
+    box-shadow: 0 8px 20px rgba(124, 108, 240, 0.35);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(124, 108, 240, 0.45);
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgba(124, 108, 240, 0.5);
+    outline-offset: 3px;
+}
+
+/* ============ 11. UTILITIES ============ */
+/* Hides text visually but keeps it for screen readers */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+}
+
+/* ============ 12. RESPONSIVE: phones and small tablets ============ */
+@media (max-width: 800px) {
+    .app {
+        grid-template-columns: 1fr;    /* one column: sidebar goes on top */
+        padding: 16px;
+    }
+
+    .sidebar {
+        position: static;
+        height: auto;
+        padding: 18px;
+    }
+
+    .logo {
+        margin-bottom: 12px;
+    }
+
+    nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .form {
+        grid-template-columns: 1fr;    /* stack form fields */
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}

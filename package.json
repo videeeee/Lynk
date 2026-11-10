@@ -1,0 +1,9 @@
+{
+  "name": "lynk-connected-client-experiences",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Connected Client Experiences — Apple-grade Liquid Glass Web App",
+  "scripts": {
+    "start": "python -m http.server 3000"
+  }
+}
