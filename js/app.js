@@ -1,7 +1,7 @@
 /**
  * js/app.js
  * Application Entry Point & Client-side View Router.
- * Connects State Store to all Views and manages view navigation.
+ * Connects State Store to all Views, Sound FX, Caustic Optics & Workspace Switching.
  */
 
 import { store } from './state.js';
@@ -14,6 +14,8 @@ import { initClientFormModal } from './components/clientForm.js';
 import { initClientDrawer, updateDrawerIfOpen } from './components/clientDrawer.js';
 import { initTheme } from './components/theme.js';
 import { initLiquidGlassEffects } from './components/glassTilt.js';
+import { initSoundSystem, sound } from './components/sound.js';
+import { initCaustics } from './components/caustics.js';
 
 // Active View State
 let currentView = 'dashboard';
@@ -66,6 +68,59 @@ export function switchView(viewName) {
     window.history.replaceState(null, '', `#${viewName}`);
 }
 
+/**
+ * Initializes the Sound FX Toggle button in the Topbar.
+ */
+function initSoundToggle() {
+    const btn = document.getElementById('sound-toggle-btn');
+    const text = document.getElementById('sound-btn-text');
+    if (!btn) return;
+
+    const updateUI = (enabled) => {
+        btn.classList.toggle('active', enabled);
+        if (text) text.textContent = enabled ? 'Audio FX' : 'Muted';
+    };
+
+    updateUI(sound.isEnabled());
+
+    btn.addEventListener('click', () => {
+        const isNowEnabled = sound.toggle();
+        updateUI(isNowEnabled);
+    });
+}
+
+/**
+ * Initializes the Quick Persona Switcher in the Overview header.
+ */
+function initPersonaSwitcher() {
+    const container = document.querySelector('.persona-switcher-bar');
+    if (!container) return;
+
+    container.addEventListener('click', (e) => {
+        const pill = e.target.closest('.persona-pill');
+        if (!pill) return;
+
+        const personaKey = pill.getAttribute('data-persona');
+        if (!personaKey) return;
+
+        sound.playTap();
+
+        if (window.spawnNeonSparkles) {
+            const rect = pill.getBoundingClientRect();
+            window.spawnNeonSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 14);
+        }
+
+        store.setWorkspace(personaKey);
+    });
+}
+
+function updatePersonaPills(currentWorkspace) {
+    document.querySelectorAll('.persona-pill').forEach(pill => {
+        const isActive = pill.getAttribute('data-persona') === currentWorkspace;
+        pill.classList.toggle('active', isActive);
+    });
+}
+
 // Master Render Function: called whenever state updates in store
 function renderApp(state) {
     renderDashboard(state);
@@ -74,12 +129,13 @@ function renderApp(state) {
     renderDocuments(state);
     renderSettings(state);
     updateDrawerIfOpen(state);
+    updatePersonaPills(state.currentWorkspace);
     initLiquidGlassEffects();
 }
 
 // App Initialization
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initialize view listeners
+    // 1. Initialize view listeners & interactive engines
     initRouter();
     initClientsView();
     initTasksView();
@@ -89,6 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initClientDrawer();
     initTheme();
     initLiquidGlassEffects();
+    initSoundSystem();
+    initCaustics();
+    initSoundToggle();
+    initPersonaSwitcher();
 
     // 2. Subscribe render loop to central state store
     store.subscribe((newState) => {
@@ -98,5 +158,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. First initial render
     renderApp(store.getState());
 
-    console.log('[Lynk] Application initialized successfully.');
+    console.log('[Lynk] Futuristic Liquid Glass HUD initialized.');
 });

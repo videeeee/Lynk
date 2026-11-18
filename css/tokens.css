@@ -1,7 +1,7 @@
 /* ==========================================================================
    css/tokens.css
    Apple-grade Liquid Glass Design Tokens & Physics Springs.
-   Specular highlights, multi-layer ambient occlusion, and spring curves.
+   Specular highlights, multi-layer ambient occlusion, neon HUD crystal accents.
    ========================================================================== */
 
 :root {
@@ -18,12 +18,24 @@
     --color-danger: #dc2626;        /* Destructive action */
     --color-danger-light: #fee2e2;
 
+    /* --- Sci-Fi / VisionOS Neon HUD Crystal Accents --- */
+    --neon-cyan: #00f0ff;
+    --neon-cyan-glow: rgba(0, 240, 255, 0.45);
+    --neon-magenta: #ff007f;
+    --neon-magenta-glow: rgba(255, 0, 127, 0.45);
+    --neon-blue: #0077ff;
+    --neon-blue-glow: rgba(0, 119, 255, 0.45);
+    --neon-amber: #ff9900;
+    --neon-amber-glow: rgba(255, 153, 0, 0.45);
+    --neon-emerald: #00ffa3;
+    --neon-emerald-glow: rgba(0, 255, 163, 0.45);
+
     /* --- Apple Liquid Glass Surfaces (Light Mode) --- */
     --bg-page: #f6f4fa;
-    --glass-bg: rgba(255, 255, 255, 0.65);
-    --glass-bg-hover: rgba(255, 255, 255, 0.85);
+    --glass-bg: rgba(255, 255, 255, 0.68);
+    --glass-bg-hover: rgba(255, 255, 255, 0.88);
     --glass-border: rgba(255, 255, 255, 0.85);
-    --glass-blur: blur(28px) saturate(180%);
+    --glass-blur: blur(28px) saturate(190%);
 
     --panel-bg: rgba(255, 255, 255, 0.92);
     --panel-border: rgba(255, 255, 255, 0.95);
@@ -51,9 +63,9 @@
     --drawer-footer-bg: rgba(255, 255, 255, 0.92);
     --table-header-bg: rgba(245, 242, 252, 0.75);
 
-    /* --- Apple Specular Highlights (Top edge light reflection, zero bottom line) --- */
-    --glass-specular: inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
-    --btn-glass-specular: inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+    /* --- Apple Specular Highlights (Top edge light reflection) --- */
+    --glass-specular: inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.9);
+    --btn-glass-specular: inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.65);
 
     /* --- Geometry & Radii --- */
     --radius-sm: 10px;
@@ -62,10 +74,10 @@
     --radius-card: 26px;
     --radius-pill: 999px;
 
-    /* --- Apple Natural Ambient Shadows (Zero dark border artifacts) --- */
+    /* --- Apple Natural Ambient Shadows --- */
     --shadow-subtle: 0 2px 8px rgba(35, 25, 60, 0.04);
     --shadow-glass: 0 8px 24px -4px rgba(35, 25, 60, 0.06), 0 2px 6px -1px rgba(35, 25, 60, 0.03);
-    --shadow-glass-lifted: 0 16px 36px -6px rgba(35, 25, 60, 0.10), 0 4px 12px -2px rgba(35, 25, 60, 0.05);
+    --shadow-glass-lifted: 0 16px 36px -6px rgba(35, 25, 60, 0.12), 0 4px 12px -2px rgba(35, 25, 60, 0.05);
     --shadow-dropdown: 0 20px 48px -8px rgba(35, 25, 60, 0.16), 0 6px 16px -3px rgba(35, 25, 60, 0.06);
     --shadow-modal: 0 24px 64px -12px rgba(24, 20, 45, 0.22), 0 10px 24px -4px rgba(24, 20, 45, 0.10);
 
@@ -78,7 +90,7 @@
     --space-xl: 32px;
 
     /* --- Focus Ring --- */
-    --focus-ring: 2px solid var(--color-violet);
+    --focus-ring: 2px solid var(--neon-cyan);
     --focus-ring-offset: 2px;
 
     /* --- Apple-grade Spring & Easing Physics Curves --- */
@@ -90,63 +102,63 @@
 }
 
 /* ==========================================================================
-   OBSIDIAN NIGHT GLASS (Apple macOS Sonoma Dark Glass)
+   OBSIDIAN NIGHT GLASS (Sci-Fi Cyber Crystal Glass HUD)
    ========================================================================== */
 [data-theme="dark"] {
     /* Brand Color Overrides */
-    --color-ink: #f5f4f8;           /* Crisp primary text */
-    --color-muted: #9894ac;         /* Subdued cool gray */
-    --color-violet: #8c7df8;        /* Refined lavender accent */
-    --color-violet-hover: #9e91ff;  /* Hover */
-    --color-violet-light: rgba(140, 125, 248, 0.2);
-    --color-teal: #2dd4bf;          /* Clean mint-teal */
-    --color-teal-light: rgba(45, 212, 191, 0.18);
-    --color-peach: #fb923c;         /* Clean warm amber-peach */
-    --color-peach-light: rgba(251, 146, 60, 0.18);
-    --color-danger: #f87171;
-    --color-danger-light: rgba(248, 113, 113, 0.2);
+    --color-ink: #f0f4fc;           /* Crisp fluorescent text */
+    --color-muted: #8c9bb5;         /* Subdued cool steel gray */
+    --color-violet: #00f0ff;        /* Electric cyan primary accent */
+    --color-violet-hover: #33f3ff;  /* Hover */
+    --color-violet-light: rgba(0, 240, 255, 0.18);
+    --color-teal: #00ffa3;          /* Neon emerald */
+    --color-teal-light: rgba(0, 255, 163, 0.18);
+    --color-peach: #ff9900;         /* Neon amber */
+    --color-peach-light: rgba(255, 153, 0, 0.18);
+    --color-danger: #ff007f;        /* Neon hot magenta */
+    --color-danger-light: rgba(255, 0, 127, 0.22);
 
     /* Deep Midnight Obsidian Surfaces */
-    --bg-page: #0b0a11;
-    --glass-bg: rgba(20, 18, 30, 0.68);
-    --glass-bg-hover: rgba(30, 26, 45, 0.86);
-    --glass-border: rgba(255, 255, 255, 0.10);
-    --glass-blur: blur(32px) saturate(180%);
+    --bg-page: #060911;
+    --glass-bg: rgba(10, 16, 32, 0.75);
+    --glass-bg-hover: rgba(16, 26, 48, 0.88);
+    --glass-border: rgba(255, 255, 255, 0.14);
+    --glass-blur: blur(32px) saturate(210%);
 
-    --panel-bg: rgba(18, 15, 28, 0.94);
-    --panel-border: rgba(255, 255, 255, 0.09);
+    --panel-bg: rgba(8, 14, 28, 0.92);
+    --panel-border: rgba(255, 255, 255, 0.12);
     --panel-blur: blur(24px);
 
     /* Item surfaces (deadlines, tasks, docs, cards) */
-    --item-bg: rgba(26, 23, 38, 0.6);
-    --item-bg-hover: rgba(38, 34, 58, 0.85);
-    --item-border: rgba(255, 255, 255, 0.08);
+    --item-bg: rgba(14, 22, 42, 0.65);
+    --item-bg-hover: rgba(22, 34, 62, 0.88);
+    --item-border: rgba(255, 255, 255, 0.10);
 
     /* Inputs */
-    --input-bg: rgba(22, 19, 34, 0.85);
-    --input-border: rgba(255, 255, 255, 0.14);
-    --input-focus-bg: rgba(28, 24, 44, 0.98);
+    --input-bg: rgba(12, 18, 36, 0.88);
+    --input-border: rgba(255, 255, 255, 0.15);
+    --input-focus-bg: rgba(16, 24, 48, 0.98);
 
     /* Navigation */
-    --nav-active-bg: rgba(140, 125, 248, 0.16);
-    --nav-active-color: #ffffff;
-    --nav-active-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    --nav-active-bg: rgba(0, 240, 255, 0.16);
+    --nav-active-color: #00f0ff;
+    --nav-active-shadow: 0 0 20px rgba(0, 240, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4);
 
     /* Modals & Drawers */
-    --modal-bg: #151322;
-    --modal-border: rgba(255, 255, 255, 0.12);
-    --drawer-bg: rgba(15, 13, 22, 0.96);
-    --drawer-footer-bg: rgba(13, 11, 18, 0.92);
-    --table-header-bg: rgba(22, 19, 32, 0.85);
+    --modal-bg: #090e1c;
+    --modal-border: rgba(0, 240, 255, 0.25);
+    --drawer-bg: rgba(8, 14, 26, 0.96);
+    --drawer-footer-bg: rgba(6, 10, 20, 0.92);
+    --table-header-bg: rgba(12, 20, 38, 0.85);
 
-    /* Specular Bevel Highlights in Dark Mode (Top edge only) */
-    --glass-specular: inset 0 1px 0 0 rgba(255, 255, 255, 0.16);
-    --btn-glass-specular: inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
+    /* Specular Bevel Highlights in Dark Mode */
+    --glass-specular: inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.28);
+    --btn-glass-specular: inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.45);
 
     /* Dark Shadows */
-    --shadow-subtle: 0 4px 16px rgba(0, 0, 0, 0.35);
-    --shadow-glass: 0 10px 32px -4px rgba(0, 0, 0, 0.55), 0 2px 8px -1px rgba(0, 0, 0, 0.3);
-    --shadow-glass-lifted: 0 20px 48px -6px rgba(0, 0, 0, 0.75), 0 4px 14px -2px rgba(0, 0, 0, 0.4);
-    --shadow-dropdown: 0 24px 64px -8px rgba(0, 0, 0, 0.85);
-    --shadow-modal: 0 28px 72px -12px rgba(0, 0, 0, 0.85), 0 14px 32px -6px rgba(0, 0, 0, 0.5);
+    --shadow-subtle: 0 4px 16px rgba(0, 0, 0, 0.45);
+    --shadow-glass: 0 12px 36px -4px rgba(0, 0, 0, 0.65), 0 0 18px -4px rgba(0, 240, 255, 0.15);
+    --shadow-glass-lifted: 0 20px 48px -6px rgba(0, 0, 0, 0.85), 0 0 28px -4px rgba(0, 240, 255, 0.28);
+    --shadow-dropdown: 0 24px 64px -8px rgba(0, 0, 0, 0.9);
+    --shadow-modal: 0 28px 72px -12px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 240, 255, 0.15);
 }

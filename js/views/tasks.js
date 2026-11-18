@@ -1,11 +1,13 @@
 /**
  * js/views/tasks.js
  * Renders Tasks List, Status Cycling (to do -> in progress -> done), Add & Delete.
+ * Integrated with celebratory chimes and neon crystal sparkle physics.
  */
 
 import { store } from '../state.js';
 import { icons } from '../components/icons.js';
 import { triggerTaskCelebration } from '../components/confetti.js';
+import { sound } from '../components/sound.js';
 
 export function initTasksView() {
     const modal = document.getElementById('task-modal');
@@ -117,15 +119,24 @@ export function renderTasks(state) {
 
                 if (willBeDone) {
                     const rect = btn.getBoundingClientRect();
-                    triggerTaskCelebration(rect.left + rect.width / 2, rect.top + rect.height / 2);
+                    const x = rect.left + rect.width / 2;
+                    const y = rect.top + rect.height / 2;
+                    triggerTaskCelebration(x, y);
+                    sound.playCelebrationChime();
+                    if (window.spawnNeonSparkles) {
+                        window.spawnNeonSparkles(x, y, 28);
+                    }
                     const taskItem = btn.closest('.task-item');
                     if (taskItem) {
                         taskItem.classList.add('task-celebrate');
                     }
+                } else {
+                    sound.playTap();
                 }
 
                 store.cycleTaskStatus(taskId);
             } else if (action === 'delete-task') {
+                sound.playTap();
                 store.deleteTask(taskId);
             }
         });

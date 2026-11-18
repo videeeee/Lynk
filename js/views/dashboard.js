@@ -1,15 +1,16 @@
 /**
  * js/views/dashboard.js
- * Renders Overview Stats and Upcoming Deadlines.
+ * Renders Overview Stats with Animated Counters and Upcoming Deadlines.
  */
 
 import { store } from '../state.js';
 import { updateCharts } from '../components/charts.js';
+import { animateCount } from '../components/counter.js';
 
 export function renderDashboard(state) {
     const { clients, tasks } = state;
 
-    // 0. Update Handcrafted SVG and CSS Charts
+    // 0. Update Handcrafted Multi-Segment Neon SVG Donut and CSS Status Bars
     updateCharts(tasks);
 
     // 1. Calculate Stat Numbers
@@ -22,18 +23,18 @@ export function renderDashboard(state) {
     const today = new Date().toISOString().split('T')[0];
     const overdueTasksCount = tasks.filter(t => t.due && t.due < today && t.status !== 'done').length;
 
-    // 2. Update Stat Cards in DOM
+    // 2. Animate Stat Numbers in DOM with rolling counters
     const elActive = document.getElementById('stat-active-clients');
     const elTotal = document.getElementById('stat-total-clients');
     const elOpen = document.getElementById('stat-open-tasks');
     const elCompleted = document.getElementById('stat-completed-tasks');
     const elOverdue = document.getElementById('stat-overdue-tasks');
 
-    if (elActive) elActive.textContent = activeClientsCount;
-    if (elTotal) elTotal.textContent = `${totalClientsCount} total`;
-    if (elOpen) elOpen.textContent = openTasksCount;
-    if (elCompleted) elCompleted.textContent = completedTasksCount;
-    if (elOverdue) elOverdue.textContent = overdueTasksCount;
+    if (elActive) animateCount(elActive, activeClientsCount);
+    if (elTotal) elTotal.textContent = `${totalClientsCount} total active workspaces`;
+    if (elOpen) animateCount(elOpen, openTasksCount);
+    if (elCompleted) animateCount(elCompleted, completedTasksCount);
+    if (elOverdue) animateCount(elOverdue, overdueTasksCount);
 
     // 3. Render Upcoming Deadlines List
     const deadlinesList = document.getElementById('upcoming-deadlines-list');

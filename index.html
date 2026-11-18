@@ -88,7 +88,13 @@
                     <input type="search" id="global-search" placeholder="Search clients, tasks..." autocomplete="off">
                 </div>
 
-                <div class="topbar-actions" style="display: flex; align-items: center; gap: 14px;">
+                <div class="topbar-actions" style="display: flex; align-items: center; gap: 12px;">
+                    <!-- Sound FX Synthesizer Toggle -->
+                    <button type="button" class="sound-pill active" id="sound-toggle-btn" aria-label="Toggle sound effects" title="Toggle glass audio effects">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="sound-icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                        <span id="sound-btn-text">Audio FX</span>
+                    </button>
+
                     <!-- Tactile Sliding Sun -> Moon Toggle Pill -->
                     <button type="button" class="theme-switch-pill" id="theme-toggle-btn" aria-label="Toggle dark/light mode" title="Toggle daylight/obsidian theme">
                         <span class="switch-icon" aria-hidden="true">
@@ -118,30 +124,51 @@
                             <h2 id="heading-dashboard" class="view-title">Overview</h2>
                             <p class="view-subtitle">High-level pulse of your client deliverables</p>
                         </div>
+
+                        <!-- Interactive Workspace Persona Switcher (Ref: Character / Persona Pills) -->
+                        <div class="persona-switcher-bar" role="group" aria-label="Quick workspace persona switcher">
+                            <span class="persona-label">Persona:</span>
+                            <button type="button" class="persona-pill active" data-persona="freelancer" title="Freelancer Persona">Freelancer</button>
+                            <button type="button" class="persona-pill" data-persona="designer" title="Designer Persona">Designer</button>
+                            <button type="button" class="persona-pill" data-persona="developer" title="Developer Persona">Developer</button>
+                            <button type="button" class="persona-pill" data-persona="enterprise" title="Enterprise Persona">Enterprise</button>
+                        </div>
                     </div>
 
-                    <!-- Stat Cards Grid -->
+                    <!-- Stat Cards Grid with Sci-Fi Indicators -->
                     <div class="stats-grid">
-                        <article class="stat-card glass">
-                            <h3 class="stat-label">Active Clients</h3>
+                        <article class="stat-card glass" data-card="active">
+                            <div class="stat-card-header">
+                                <h3 class="stat-label">Active Clients</h3>
+                                <span class="stat-pill-indicator stat-cyan">+78% Active</span>
+                            </div>
                             <p class="stat-number" id="stat-active-clients">0</p>
                             <span class="stat-meta" id="stat-total-clients">0 total</span>
                         </article>
 
-                        <article class="stat-card glass">
-                            <h3 class="stat-label">Open Tasks</h3>
+                        <article class="stat-card glass" data-card="open">
+                            <div class="stat-card-header">
+                                <h3 class="stat-label">Open Tasks</h3>
+                                <span class="stat-pill-indicator stat-magenta"><span class="pulse-dot"></span> In Flight</span>
+                            </div>
                             <p class="stat-number" id="stat-open-tasks">0</p>
                             <span class="stat-meta">Pending completion</span>
                         </article>
 
-                        <article class="stat-card glass">
-                            <h3 class="stat-label">Completed</h3>
+                        <article class="stat-card glass" data-card="completed">
+                            <div class="stat-card-header">
+                                <h3 class="stat-label">Completed</h3>
+                                <span class="stat-pill-indicator stat-emerald">Delivered</span>
+                            </div>
                             <p class="stat-number text-teal" id="stat-completed-tasks">0</p>
-                            <span class="stat-meta">Delivered</span>
+                            <span class="stat-meta">Delivered milestones</span>
                         </article>
 
-                        <article class="stat-card glass">
-                            <h3 class="stat-label">Overdue</h3>
+                        <article class="stat-card glass" data-card="overdue">
+                            <div class="stat-card-header">
+                                <h3 class="stat-label">Overdue</h3>
+                                <span class="stat-pill-indicator stat-amber">Action Req.</span>
+                            </div>
                             <p class="stat-number text-peach" id="stat-overdue-tasks">0</p>
                             <span class="stat-meta">Need attention</span>
                         </article>
